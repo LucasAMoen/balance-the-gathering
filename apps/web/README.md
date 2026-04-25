@@ -1,4 +1,4 @@
-# Web App
+# Web Application
 
 ## Web App Project Structure
 
