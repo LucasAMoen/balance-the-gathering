@@ -1,5 +1,13 @@
 # Web Application
 
+## Contents
+
+- [Project Structure](#web-app-project-structure)
+
+- [Application Patterns](#application-patterns)
+  - [MVP](#mvp)
+- [Tech Stack](#tech-stack)
+
 ## Web App Project Structure
 
 ``` md
@@ -74,6 +82,40 @@ View -> Presenter -> Model
 - Jest - Testing library
 
 # Default README
+
+## Design
+
+### Bottom Nav bar
+
+Tabs:
+- Central play tab - click to host a game
+- Dashboard
+  - Welcomes the user
+  - Lists user stats
+    - wins
+    - losses
+    - win/lose ratio
+    - bounty on player
+    - bounties placed on other players
+    - Allow them to start the game
+- Collection
+  - Stats on cards
+    - Total value of cards in points
+    - Cards owned
+    - Number of killed cards
+  - Navigation to store
+  - Navigation to view their owned cards
+  - Navigation to decks page
+  - Bulk upload button - opens modal to paste deck into
+- Settings - profile circle in top right corner
+  - Edit profile button
+  - Username
+  - Theme choosing
+  - About
+    - Contains a link to how to play
+  - Logout
+
+![image](./docs/drawing.png)
 
 ## Expanding the ESLint configuration
 
