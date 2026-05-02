@@ -28,6 +28,10 @@
 - Winning a 3 pod earns 250 points
 - Winning a 1v1 earns 100 points
 
+### ELO System:
+- When a user joins the game, the average of everyone's total point value will be calculated.
+- When someone wins the game, if they had less than that average total, they will receive points equal to 50% the difference
+
 ### Purchasing Cards
 - Players can use/purchase/print/create cards with their points
 - 1 point is equivalent to 1 cent

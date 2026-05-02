@@ -81,8 +81,6 @@ View -> Presenter -> Model
 - Axios - API client that allows for custom api clients
 - Jest - Testing library
 
-# Default README
-
 ## Design
 
 ### Bottom Nav bar
@@ -103,9 +101,17 @@ Tabs:
     - Total value of cards in points
     - Cards owned
     - Number of killed cards
-  - Navigation to store
+  - Store
+    - Search bar at the top for searching cards by name
+    - All of the cards fetched from the search clickable via link (maybe just a link to the scryfall page), a small image of the card (likely also from scryfall), a cost in points and a BUY button.
+      - Buy brings up a confirmation with the amount in points, picture and the name of the card
+      - User must click the confirm button twice
+      - Once confirmed a banner will show confirming the purchase
   - Navigation to view their owned cards
-  - Navigation to decks page
+  - Decks
+    - Search bar at the top for searching cards by name
+    - Bulk print cards button
+    - Show cards similar to store
   - Bulk upload button - opens modal to paste deck into
 - Settings - profile circle in top right corner
   - Edit profile button
@@ -116,6 +122,8 @@ Tabs:
   - Logout
 
 ![image](./docs/drawing.png)
+
+# Default README
 
 ## Expanding the ESLint configuration
 

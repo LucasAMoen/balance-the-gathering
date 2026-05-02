@@ -40,6 +40,7 @@ Game
 - id: uuid
 - joinCode: 4 characters (easy to remember)
 - players: array fk to user
+- pointAverage: int
 - commanderDamage: fk to CommanderDamage
 - winner: fk to user
 - gameStatus: enum (inProgress, finished, tied)

@@ -5,7 +5,7 @@
 - Lazy Bulk download from scryfall if both are true:
     - User bulk uploads their deck/searches/purchases a card
     - and
-    - It has been > 7 days since last bulk upload
+    - It has been > 1 day since last bulk upload
 - OR
 - Whenever someone starts the server
 - Bulk pull json from scryfall of all card data
