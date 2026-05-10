@@ -7,6 +7,8 @@
 - [Application Patterns](#application-patterns)
   - [MVP](#mvp)
 - [Tech Stack](#tech-stack)
+- [Design](#design)
+  - [Bottom Nav Bar](#bottom-nav-bar)
 
 ## Web App Project Structure
 
@@ -51,7 +53,7 @@ src/
     typography.ts
     spacing.ts
     themes/
-      dark/
+      dark.ts
       light.ts
       magic.ts
     index.ts
