@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/shopspring/decimal"
@@ -48,6 +49,12 @@ func getCards(context *gin.Context) {
 
 func main() {
 	router := gin.Default()
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:5173"}
+	config.AllowHeaders = []string{"Accept", "Access-Control-Allow-Origin", "Referer", "sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform", "user-agent"}
+
+	router.Use(cors.New(config))
 	router.GET("/cards", getCards)
 	router.Run("localhost:8080")
 }

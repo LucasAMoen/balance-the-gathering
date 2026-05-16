@@ -1,6 +1,8 @@
 import { type ReactNode } from 'react';
 import { ThemeProvider } from '@mui/material/styles'
 import { theme } from '@/theme/themes/dark'
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '@/lib/queryClient';
 
 type AppProviderProps = {
 	children: ReactNode;
@@ -9,9 +11,11 @@ type AppProviderProps = {
 export const AppProvider = ({ children }: AppProviderProps) => {
 	return (
 		<>
-			<ThemeProvider theme={theme}>
-				{children}
-			</ThemeProvider>
+			<QueryClientProvider client = {queryClient}>
+				<ThemeProvider theme={theme}>
+					{children}
+				</ThemeProvider>
+			</QueryClientProvider>
 		</>
 	);
 };
