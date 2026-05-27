@@ -1,10 +1,27 @@
 import SearchBar from '@/features/collection/components/SearchBar'
-import { useState } from 'react'
+import { useEffect, useState} from 'react'
+import MagicCardCard from './components/MagicCard';
+import { type MagicCard } from '@/types/card.types'
+import { searchCard } from './utils/searchCard';
 
 export default function CollectionPage() {
-    const [searchQuery, setSearchQuery] = useState<string>();
-    
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const [card, setCard ] = useState<MagicCard>();
+
+    useEffect(() => {
+        async function load() {
+            setCard(await searchCard(searchQuery))
+        }
+        load()
+        
+    }, [searchQuery])
+
     return (
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+        <div>
+            <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+            {card &&
+                <MagicCardCard {...card} />
+            }
+        </div>
     );
 }

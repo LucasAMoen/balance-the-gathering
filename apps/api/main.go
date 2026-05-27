@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -47,14 +48,32 @@ func getCards(context *gin.Context) {
 	context.IndentedJSON(http.StatusOK, cards)
 }
 
+func getCard(context *gin.Context) {
+	id := context.Query("id")
+	for idx := range cards {
+		if cards[idx].Id.String() == id {
+			context.IndentedJSON(http.StatusOK, cards[idx])
+			return
+		}
+	}
+	context.IndentedJSON(http.StatusNotFound, nil)
+}
+
 func main() {
+	serverAddress := os.Getenv("SERVER_ADDRESS")
+	if serverAddress == "" {
+		serverAddress = "localhost"
+	}
+	fullAddress := "http://" + serverAddress
+
 	router := gin.Default()
 
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:5173"}
+	config.AllowOrigins = []string{"http://localhost:5173", fullAddress + ":5173"}
 	config.AllowHeaders = []string{"Accept", "Access-Control-Allow-Origin", "Referer", "sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform", "user-agent"}
 
 	router.Use(cors.New(config))
 	router.GET("/cards", getCards)
-	router.Run("localhost:8080")
+	router.GET("/card", getCard)
+	router.Run(serverAddress + ":8080")
 }

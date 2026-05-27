@@ -1,6 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import getCards from "../api/getCards";
+import getCards from "@/api/getCards";
 import { useMemo } from "react";
+
+export type DisplayCard = {
+    id: string,
+    label: string
+}
 
 export function useCards() {
     const {isPending, error, data: cards} = useQuery(
@@ -10,8 +15,8 @@ export function useCards() {
         }
     )
 
-    const cardNames = useMemo(() => {
-        return cards?.map((c) => c.name)
+    const cardNames = useMemo((): DisplayCard[] | undefined => {
+        return cards?.map((c): DisplayCard => {return {id: c.id, label: c.name}})
     }, [cards]) || []
 
     return {
