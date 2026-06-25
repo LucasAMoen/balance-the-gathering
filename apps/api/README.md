@@ -11,3 +11,17 @@
 - Bulk pull json from scryfall of all card data
 - Dump all card data into the Postgres "Cards" table
 - Keep track of last bulk upload via local cache
+
+## Api App Structure:
+
+``` md
+application/
+  
+cmd/                                  #All go executables
+  api.go
+  main.go
+```
+
+## Tech Stack
+
+- godotenv - file based env

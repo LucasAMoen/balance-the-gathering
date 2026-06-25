@@ -1,16 +1,18 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"time"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/shopspring/decimal"
 )
+
+// Split to it's own file
 
 type Card struct {
 	Id        uuid.UUID       `json:"id"`
@@ -59,21 +61,26 @@ func getCard(context *gin.Context) {
 	context.IndentedJSON(http.StatusNotFound, nil)
 }
 
+// Split to its own file
+
 func main() {
 	serverAddress := os.Getenv("SERVER_ADDRESS")
 	if serverAddress == "" {
 		serverAddress = "localhost"
 	}
-	fullAddress := "http://" + serverAddress
 
-	router := gin.Default()
+	cfg := config{
+		address:  serverAddress,
+		port:     "8080",
+		database: dbconfig{},
+	}
 
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:5173", fullAddress + ":5173"}
-	config.AllowHeaders = []string{"Accept", "Access-Control-Allow-Origin", "Referer", "sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform", "user-agent"}
+	api := application{
+		config: cfg,
+	}
 
-	router.Use(cors.New(config))
-	router.GET("/cards", getCards)
-	router.GET("/card", getCard)
-	router.Run(serverAddress + ":8080")
+	if error := api.run(api.mount()); error != nil {
+		log.Printf("Server has failed to start, Error: %s", error)
+		os.Exit(1)
+	}
 }

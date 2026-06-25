@@ -1,17 +1,23 @@
 # Balance The Gathering
 
-## Joining the Game
+## Contents
+
+- [Developer Readme](/DEVELOP.md)
+
+## Game Rules
+
+### Joining the Game
 - Decks joining the game must begin less than 15 dollars
 - Basic lands do not count toward the cost
 - Anything other than cards (counters, dice, deck box, sleeves) do not count toward the cost
 - Packs can be purchased and all cards you get from the pack can be used
 - Anything you can get with 15 dollars
 
-## Points
+### Points
 - Everyone starts with 0 points
 - Points are worth about 1 cent each
 
-### Bounties
+#### Bounties
 - Bounties can be put on other players
 - A bounty is paid for in points and a player who collects a bounty gets the points
 - The player to deliver the final blow collects the bounty
@@ -23,23 +29,23 @@
   - 6 games in a row - 500 bounty points
   - Maxes out at 500 bounty points
 
-### Earning points
+#### Earning points
 - Winning a 4 pod earns 500 points
 - Winning a 3 pod earns 250 points
 - Winning a 1v1 earns 100 points
 
-### ELO System:
+#### ELO System:
 - When a user joins the game, the average of everyone's total point value will be calculated.
 - When someone wins the game, if they had less than that average total, they will receive points equal to 50% the difference
 
-### Purchasing Cards
+#### Purchasing Cards
 - Players can use/purchase/print/create cards with their points
 - 1 point is equivalent to 1 cent
 - If players want to add a new card to their deck they must pay the cards cost in points via the application
 - Price is determined by an official api
 - When players purchase new cards, they still own their old ones which can be used to build other decks
 
-### Killing Cards
+#### Killing Cards
 - Players can "kill" cards other people own if both of the following are true
   - The card is in the graveyard/exile
   - AND
@@ -53,13 +59,9 @@
 - Commander can be killed
 - Any amount of players can put in points to kill a card
 
-### Graphical Interfaces
+#### Graphical Interfaces
 - Everyone logs in on their phone and has their life total on their own phone
 - Everyone must be logged in and in the lobby before the game can start
 - Once a game starts everyone begins at 40 health
 - Commander damage can be taken in the app
 - Bounties can be placed any time within or outside a game
-
-### Application
-- Uses the scryfall api to find cards
-- Users import their decks usingstandard mtg export/import
