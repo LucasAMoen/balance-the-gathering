@@ -19,9 +19,11 @@ func (app *application) mount() http.Handler {
 
 	// Middleware
 	router.Use(cors.New(config))
+	router.Use(gin.Recovery())
+	router.Use(gin.Logger())
 
 	// Routes
-	router.GET("/health")
+	router.GET("/health", getHealth)
 	router.GET("/cards", getCards)
 	router.GET("/card", getCard)
 
@@ -37,7 +39,7 @@ func (app *application) run(handler http.Handler) error {
 		IdleTimeout:  time.Minute,
 	}
 
-	log.Printf("Server has started at address %s on port %s", app.config.address, app.config.port)
+	log.Printf("Server has started at address: %s:%s", app.config.address, app.config.port)
 
 	return server.ListenAndServe()
 }

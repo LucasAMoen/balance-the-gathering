@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"os"
@@ -61,6 +61,10 @@ func getCard(context *gin.Context) {
 	context.IndentedJSON(http.StatusNotFound, nil)
 }
 
+func getHealth(context *gin.Context) {
+	context.Writer.Write([]byte("All good"))
+}
+
 // Split to its own file
 
 func main() {
@@ -79,8 +83,12 @@ func main() {
 		config: cfg,
 	}
 
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+
+	slog.SetDefault(logger)
+
 	if error := api.run(api.mount()); error != nil {
-		log.Printf("Server has failed to start, Error: %s", error)
+		slog.Error("Server has failed to start", "error", error)
 		os.Exit(1)
 	}
 }
