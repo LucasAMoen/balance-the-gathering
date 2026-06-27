@@ -2,7 +2,12 @@
 
 ## Contents
 
-- [Developer Readme](/DEVELOP.md)
+- Other Documents:
+  - [Developer Readme](/DEVELOP.md)
+
+- This Document:
+  - [Game Rules](#game-rules)
+  - [AI Use Statement](#ai-use-statement)
 
 ## Game Rules
 
@@ -65,3 +70,7 @@
 - Once a game starts everyone begins at 40 health
 - Commander damage can be taken in the app
 - Bounties can be placed any time within or outside a game
+
+## AI Use Statement
+
+The content in this codebase contains **absolutely zero** AI generated code. This game is meant to be an artisan code project to hone in my programming skills and passion for software engineering. The **only** times AI have been used in this project are for outstanding bugs related to setup and/or issues not solvable by parsing through documentation. It is a slower process, but it allows me to fully learn the content without a crutch and gives me the depth of experience applicable to any other project.
