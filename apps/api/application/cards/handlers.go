@@ -1,6 +1,7 @@
 package cards
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/LucasAMoen/balance-the-gathering/application/cards/data"
@@ -18,6 +19,12 @@ func NewHandler(service Service) *handler {
 }
 
 func (h *handler) GetCards(writer http.ResponseWriter, request *http.Request) {
+	err := h.service.GetCards(request.Context())
+	if err != nil {
+		log.Println(err)
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+	}
+
 	json.Write(writer, http.StatusOK, data.Cards)
 }
 

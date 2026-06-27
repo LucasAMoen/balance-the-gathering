@@ -26,8 +26,10 @@ func (app *application) mount() http.Handler {
 		AllowedHeaders: []string{"Accept", "Access-Control-Allow-Origin", "Referer", "sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform", "user-agent"},
 	}))
 
+	// Services
+	cardService := cards.NewService()
 	// Handlers
-	cardHandler := cards.NewHandler(nil)
+	cardHandler := cards.NewHandler(cardService)
 
 	// Routes
 	router.Get("/health", cardHandler.GetHealth)
