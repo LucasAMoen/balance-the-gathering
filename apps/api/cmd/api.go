@@ -5,27 +5,34 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
+	"github.com/LucasAMoen/balance-the-gathering/application/cards"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 )
 
 func (app *application) mount() http.Handler {
-	router := gin.Default()
-
-	// Config
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:5173", "http://" + app.config.address + ":5173"}
-	config.AllowHeaders = []string{"Accept", "Access-Control-Allow-Origin", "Referer", "sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform", "user-agent"}
+	router := chi.NewRouter()
 
 	// Middleware
-	router.Use(cors.New(config))
-	router.Use(gin.Recovery())
-	router.Use(gin.Logger())
+	router.Use(middleware.RequestID)
+	router.Use(middleware.Logger)
+	router.Use(middleware.Recoverer)
+
+	// Cors
+	router.Use(cors.Handler(cors.Options{
+		AllowedOrigins: []string{"http://localhost:5173", "http://" + app.config.address + ":5173"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE"},
+		AllowedHeaders: []string{"Accept", "Access-Control-Allow-Origin", "Referer", "sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform", "user-agent"},
+	}))
+
+	// Handlers
+	cardHandler := cards.NewHandler(nil)
 
 	// Routes
-	router.GET("/health", getHealth)
-	router.GET("/cards", getCards)
-	router.GET("/card", getCard)
+	router.Get("/health", cardHandler.GetHealth)
+	router.Get("/cards", cardHandler.GetCards)
+	router.Get("/card", cardHandler.GetCard)
 
 	return router
 }
