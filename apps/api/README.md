@@ -25,3 +25,7 @@ cmd/                                  #All go executables
 ## Tech Stack
 
 - godotenv - file based env
+
+## Attribution
+
+[This youtube video](https://www.youtube.com/watch?v=s3XItrqfccw) was followed closely for the development of this api

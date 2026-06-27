@@ -1,10 +1,22 @@
 # Supabase Application
 
-Supabase is the auth/database
-
-Default readme is [here](/apps/supabase/DEFAULTREADME.md)
+Postgres is the database
 
 ## Postgres Setup
+
+- Copy the example.env file into .env and fill with your desired credentials
+
+- Run the following command:
+``` bash
+
+#apps/api/infrastructure/adapters/postgresql
+docker compose up
+
+```
+
+- Then you can visit localhost:8080 to view the database
+    - Log in with the credentials in your .env file and use db as the server
+
 
 User:
 - id: uuid

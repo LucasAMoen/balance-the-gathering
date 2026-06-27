@@ -13,7 +13,7 @@ func main() {
 
 	cfg := config{
 		address:  serverAddress,
-		port:     "8080",
+		port:     "8040",
 		database: dbconfig{},
 	}
 

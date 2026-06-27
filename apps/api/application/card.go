@@ -14,7 +14,6 @@ type Card struct {
 	Url       string          `json:"url"`
 	Layout    string          `json:"layout"`
 	ImageUrl  url.URL         `json:"imageUrl"`
-	Allowed   bool            `json:"allowed"`
 	Price     decimal.Decimal `json:"price"`
 	CreatedAt time.Time       `json:"createdAt"`
 }

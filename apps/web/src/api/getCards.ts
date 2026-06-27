@@ -5,7 +5,7 @@ const apiServerAddress = import.meta.env.VITE_API_SERVER_ADDRESS
 
 export default async function getCards(): Promise<MagicCard[]> {
     const response = await axios.get<MagicCard[]>(
-        apiServerAddress + ":8080/cards",
+        apiServerAddress + ":8040/cards",
         {
             headers: {
                 'Access-Control-Allow-Origin': '*'
@@ -18,7 +18,7 @@ export default async function getCards(): Promise<MagicCard[]> {
 
 export async function getCard(cardId: string): Promise<MagicCard> {
     const response = await axios.get<MagicCard>(
-        apiServerAddress + ":8080/card",
+        apiServerAddress + ":8040/card",
         {
             headers: {
                 'Access-Control-Allow-Origin': '*'
