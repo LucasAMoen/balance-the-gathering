@@ -64,5 +64,5 @@ type config struct {
 }
 
 type dbconfig struct {
-	dsn string
+	connectionString string
 }

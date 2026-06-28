@@ -1,22 +1,32 @@
 # Supabase Application
 
-Postgres is the database
-
 ## Postgres Setup
 
-- Copy the example.env file into .env and fill with your desired credentials
+- Copy the example.env file within this directory into .env and fill with your desired credentials
 
 - Run the following command:
 ``` bash
-
 #apps/api/infrastructure/adapters/postgresql
 docker compose up
-
 ```
 
 - Then you can visit localhost:8080 to view the database
     - Log in with the credentials in your .env file and use db as the server
 
+- Ensure you have sqlc and goose installed on your device
+
+``` bash
+go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+go install github.com/pressly/goose/v3/cmd/goose@latest
+```
+
+-  Then run the following commands
+``` bash
+#apps/api/infrastructure
+goose up
+goose -dir ./infrastructure/adapters/postgresql/seeds/ up
+```
+- This will migrate your database and seed the data
 
 User:
 - id: uuid

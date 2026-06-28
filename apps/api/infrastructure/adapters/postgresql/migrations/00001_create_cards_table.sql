@@ -1,6 +1,6 @@
 -- +goose Up
 CREATE TABLE IF NOT EXISTS cards (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     url TEXT NOT NULL,
     layout TEXT,
