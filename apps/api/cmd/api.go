@@ -6,9 +6,11 @@ import (
 	"time"
 
 	"github.com/LucasAMoen/balance-the-gathering/application/cards"
+	repository "github.com/LucasAMoen/balance-the-gathering/infrastructure/adapters/postgresql/sqlc"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
+	"github.com/jackc/pgx/v5"
 )
 
 func (app *application) mount() http.Handler {
@@ -27,7 +29,7 @@ func (app *application) mount() http.Handler {
 	}))
 
 	// Services
-	cardService := cards.NewService()
+	cardService := cards.NewService(repository.New(app.database))
 	// Handlers
 	cardHandler := cards.NewHandler(cardService)
 
@@ -54,7 +56,8 @@ func (app *application) run(handler http.Handler) error {
 }
 
 type application struct {
-	config config
+	config   config
+	database *pgx.Conn
 }
 
 type config struct {

@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/LucasAMoen/balance-the-gathering/application/cards/data"
 	"github.com/LucasAMoen/balance-the-gathering/application/json"
+	"github.com/google/uuid"
 )
 
 type handler struct {
@@ -19,24 +19,25 @@ func NewHandler(service Service) *handler {
 }
 
 func (h *handler) GetCards(writer http.ResponseWriter, request *http.Request) {
-	err := h.service.GetCards(request.Context())
+	cards, err := h.service.GetCards(request.Context())
 	if err != nil {
 		log.Println(err)
 		http.Error(writer, err.Error(), http.StatusInternalServerError)
 	}
 
-	json.Write(writer, http.StatusOK, data.Cards)
+	json.Write(writer, http.StatusOK, cards)
 }
 
 func (h *handler) GetCard(writer http.ResponseWriter, request *http.Request) {
 	id := request.URL.Query().Get("id")
-	for idx := range data.Cards {
-		if data.Cards[idx].Id.String() == id {
-			json.Write(writer, http.StatusOK, data.Cards[idx])
-			return
-		}
+	card, error := h.service.GetCardById(request.Context(), uuid.MustParse("urn:uuid:"+id))
+
+	if error != nil {
+		log.Println(error)
+		http.Error(writer, error.Error(), http.StatusInternalServerError)
 	}
-	json.Write(writer, http.StatusNotFound, nil)
+
+	json.Write(writer, http.StatusOK, card)
 }
 
 func (h *handler) GetHealth(writer http.ResponseWriter, request *http.Request) {

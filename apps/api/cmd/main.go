@@ -36,7 +36,8 @@ func main() {
 	logger.Info("Connected to database")
 
 	api := application{
-		config: cfg,
+		config:   cfg,
+		database: conn,
 	}
 
 	if error := api.run(api.mount()); error != nil {
