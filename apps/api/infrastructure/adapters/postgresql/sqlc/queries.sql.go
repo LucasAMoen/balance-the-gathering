@@ -64,3 +64,12 @@ func (q *Queries) GetCards(ctx context.Context) ([]Card, error) {
 	}
 	return items, nil
 }
+
+type InsertCardsParams struct {
+	ID       pgtype.UUID    `json:"id"`
+	Name     string         `json:"name"`
+	Url      string         `json:"url"`
+	Layout   pgtype.Text    `json:"layout"`
+	Imageurl pgtype.Text    `json:"imageurl"`
+	Price    pgtype.Numeric `json:"price"`
+}

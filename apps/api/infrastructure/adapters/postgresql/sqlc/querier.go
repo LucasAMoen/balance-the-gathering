@@ -13,6 +13,7 @@ import (
 type Querier interface {
 	GetCardById(ctx context.Context, id pgtype.UUID) (Card, error)
 	GetCards(ctx context.Context) ([]Card, error)
+	InsertCards(ctx context.Context, arg []InsertCardsParams) (int64, error)
 }
 
 var _ Querier = (*Queries)(nil)
