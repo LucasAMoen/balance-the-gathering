@@ -4,15 +4,16 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/LucasAMoen/balance-the-gathering/application"
 	"github.com/LucasAMoen/balance-the-gathering/application/json"
 	"github.com/google/uuid"
 )
 
 type handler struct {
-	service Service
+	service application.IRepository
 }
 
-func NewHandler(service Service) *handler {
+func NewHandler(service application.IRepository) *handler {
 	return &handler{
 		service: service,
 	}

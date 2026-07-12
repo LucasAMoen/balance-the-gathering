@@ -1,11 +1,11 @@
-package cards
+package infrastructure
 
 import (
 	"context"
-	"log"
 	"net/url"
 
 	"github.com/LucasAMoen/balance-the-gathering/application"
+	"github.com/LucasAMoen/balance-the-gathering/domain"
 	repository "github.com/LucasAMoen/balance-the-gathering/infrastructure/adapters/postgresql/sqlc"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
@@ -16,34 +16,28 @@ type svc struct {
 	repository repository.Querier
 }
 
-func NewService(repository repository.Querier) Service {
+func NewRepository(repository repository.Querier) application.IRepository {
 	return &svc{
 		repository: repository,
 	}
 }
 
-type Service interface {
-	GetCards(ctx context.Context) ([]application.Card, error)
-	GetCardById(ctx context.Context, id uuid.UUID) (application.Card, error)
-}
-
-func (s *svc) GetCards(ctx context.Context) ([]application.Card, error) {
+func (s *svc) GetCards(ctx context.Context) ([]domain.Card, error) {
 	repositoryCards, error := s.repository.GetCards(ctx)
-	var cardArray = []application.Card{}
+	var cardArray = []domain.Card{}
 	for _, card := range repositoryCards {
 		cardArray = append(cardArray, toCard(card))
 	}
 	return cardArray, error
 }
 
-func (s *svc) GetCardById(ctx context.Context, id uuid.UUID) (application.Card, error) {
+func (s *svc) GetCardById(ctx context.Context, id uuid.UUID) (domain.Card, error) {
 	repositoryCard, error := s.repository.GetCardById(ctx, pgtype.UUID{Bytes: id, Valid: true})
-	log.Println("Here")
 	return toCard(repositoryCard), error
 }
 
-func toCard(card repository.Card) application.Card {
-	return application.Card{
+func toCard(card repository.Card) domain.Card {
+	return domain.Card{
 		Id:        uuid.MustParse("urn:uuid:" + card.ID.String()),
 		Name:      card.Name,
 		Url:       url.URL{Path: card.Url},

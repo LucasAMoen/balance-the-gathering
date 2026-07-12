@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/LucasAMoen/balance-the-gathering/application/cards"
+	"github.com/LucasAMoen/balance-the-gathering/infrastructure"
 	repository "github.com/LucasAMoen/balance-the-gathering/infrastructure/adapters/postgresql/sqlc"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -13,7 +14,7 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func (app *application) mount() http.Handler {
+func (app *Application) Mount() http.Handler {
 	router := chi.NewRouter()
 
 	// Middleware
@@ -23,15 +24,16 @@ func (app *application) mount() http.Handler {
 
 	// Cors
 	router.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{"http://localhost:5173", "http://" + app.config.address + ":5173"},
+		AllowedOrigins: []string{"http://localhost:5173", "http://" + app.Config.Address + ":5173"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE"},
 		AllowedHeaders: []string{"Accept", "Access-Control-Allow-Origin", "Referer", "sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform", "user-agent"},
 	}))
 
-	// Services
-	cardService := cards.NewService(repository.New(app.database))
+	// Infrastructure
+	repo := infrastructure.NewRepository(repository.New(app.Database))
+
 	// Handlers
-	cardHandler := cards.NewHandler(cardService)
+	cardHandler := cards.NewHandler(repo)
 
 	// Routes
 	router.Get("/health", cardHandler.GetHealth)
@@ -41,31 +43,31 @@ func (app *application) mount() http.Handler {
 	return router
 }
 
-func (app *application) run(handler http.Handler) error {
+func (app *Application) Run(handler http.Handler) error {
 	server := &http.Server{
-		Addr:         app.config.address + ":" + app.config.port,
+		Addr:         app.Config.Address + ":" + app.Config.Port,
 		Handler:      handler,
 		WriteTimeout: time.Second * 30,
 		ReadTimeout:  time.Second * 10,
 		IdleTimeout:  time.Minute,
 	}
 
-	log.Printf("Server has started at address: %s:%s", app.config.address, app.config.port)
+	log.Printf("Server has started at address: %s:%s", app.Config.Address, app.Config.Port)
 
 	return server.ListenAndServe()
 }
 
-type application struct {
-	config   config
-	database *pgx.Conn
+type Application struct {
+	Config   Config
+	Database *pgx.Conn
 }
 
-type config struct {
-	address  string
-	port     string
-	database dbconfig
+type Config struct {
+	Address  string
+	Port     string
+	Database Dbconfig
 }
 
-type dbconfig struct {
-	connectionString string
+type Dbconfig struct {
+	ConnectionString string
 }

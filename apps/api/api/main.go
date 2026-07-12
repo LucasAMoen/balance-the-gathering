@@ -15,11 +15,11 @@ func main() {
 	serverAddress := env.GetEnvVariable("SERVER_ADDRESS", "localhost")
 	dbConnectionString := env.GetEnvVariable("GOOSE_DBSTRING", "host=localhost user=postgres password=postgres dbname=balance_the_gathering sslmode=verify-full")
 
-	cfg := config{
-		address: serverAddress,
-		port:    "8040",
-		database: dbconfig{
-			connectionString: dbConnectionString,
+	cfg := Config{
+		Address: serverAddress,
+		Port:    "8040",
+		Database: Dbconfig{
+			ConnectionString: dbConnectionString,
 		},
 	}
 
@@ -28,19 +28,19 @@ func main() {
 	slog.SetDefault(logger)
 
 	// Database
-	conn, error := pgx.Connect(ctx, cfg.database.connectionString)
+	conn, error := pgx.Connect(ctx, cfg.Database.ConnectionString)
 	if error != nil {
 		panic(error)
 	}
 	defer conn.Close(ctx)
 	logger.Info("Connected to database")
 
-	api := application{
-		config:   cfg,
-		database: conn,
+	app := Application{
+		Config:   cfg,
+		Database: conn,
 	}
 
-	if error := api.run(api.mount()); error != nil {
+	if error := app.Run(app.Mount()); error != nil {
 		slog.Error("Server has failed to start", "error", error)
 		os.Exit(1)
 	}

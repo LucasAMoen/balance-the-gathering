@@ -1,4 +1,4 @@
-# Supabase Application
+# Infrastructure
 
 ## Postgres Setup
 
@@ -24,9 +24,29 @@ go install github.com/pressly/goose/v3/cmd/goose@latest
 ``` bash
 #apps/api/infrastructure
 goose up
-goose -dir ./infrastructure/adapters/postgresql/seeds/ up
+goose -dir ./infrastructure/adapters/postgresql/migrations/ -table _db_version up
+# If you want to seed the database
+goose -dir ./infrastructure/adapters/postgresql/seeds/ -table _db_seeds up
 ```
 - This will migrate your database and seed the data
+
+## Changes To the Database (goose)
+
+To make changes to the database please add a migration to the [migrations](./adapters/postgresql/migrations/) directory, do so by running this command:
+
+``` bash
+#apps/api
+goose -dir ./infrastructure/adapters/postgresql/migrations/ create -s test sql
+```
+
+Then if necessary create a seed for that migration
+
+``` bash
+#apps/api
+goose -dir ./infrastructure/adapters/postgresql/seeds create -s test sql
+```
+
+The migration/seed names should be descriptive of what the purpose is, please see other migrations/seeds for examples
 
 User:
 - id: uuid
@@ -50,13 +70,6 @@ OwnedCards:
 - isKilled: bool
 - priceAtPurchase: decimal
 - obtainedAt: date
-
-Cards:
-- id: scryfall id
-- name: string
-- imageUrl: url string
-- price: decimal
-- createdAt: date
 
 Game
 - id: uuid

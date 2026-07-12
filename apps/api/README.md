@@ -1,5 +1,12 @@
 # Api Application
 
+## Setup
+
+Please follow the instructions from these files:
+
+- [Api Readme](./api/README.md)
+- [Infrastructure Readme](./infrastructure/README.md)
+
 ## Bulk Download
 
 - Lazy Bulk download from scryfall if both are true:
